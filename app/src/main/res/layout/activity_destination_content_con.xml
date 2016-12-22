@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.dream.will.hydrogenballoon.customview.GoodsView
+        android:id="@+id/destination_con_GoodsView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/destination_con_dest"
+        style="@style/Destination_ItemLayout_Style"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <TextView
+            android:id="@+id/destination_con_dest_title"
+            style="@style/Destination_Item_Title_Style" />
+
+        <View style="@style/destination_item_line_style" />
+
+        <com.dream.will.hydrogenballoon.customview.DestinationView
+            android:id="@+id/destination_con_destView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View style="@style/destination_item_line_style" />
+
+        <Button
+            android:id="@+id/destination_con_dest_btn"
+            style="@style/destination_item_btn_style" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/destination_con_plan"
+        style="@style/Destination_ItemLayout_Style">
+
+        <TextView
+            android:id="@+id/destination_con_plan_title"
+            style="@style/Destination_Item_Title_Style"
+            android:text="经典路线" />
+
+        <TextView
+            android:id="@+id/destination_con_plan_subTitle"
+            style="@style/Destination_Item_SubTitle_Style"
+            android:text="“懒人形成:一键复制经典路线”" />
+
+        <ImageView
+            android:id="@+id/destination_con_plan_map"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="2日行程" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="5日行程" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/destination_con_collection"
+        style="@style/Destination_ItemLayout_Style">
+
+        <TextView
+            android:id="@+id/destination_con_collection_title"
+            style="@style/Destination_Item_Title_Style"
+            android:text="旅行榜单" />
+
+        <TextView
+            android:id="@+id/destination_con_collection_subTitle"
+            style="@style/Destination_Item_SubTitle_Style"
+            android:text="“自定义行程:收藏榜单后自动生成行程”" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/destination_con_useractivity"
+        style="@style/Destination_ItemLayout_Style">
+
+        <TextView
+            android:id="@+id/destination_con_useractivity_title"
+            style="@style/Destination_Item_Title_Style"
+            android:text="相关氢游记" />
+
+        <ImageView
+            android:id="@+id/destination_con_useractivity_img"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="by" />
+
+            <TextView
+                android:id="@+id/destination_con_useractivity_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Pinky"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+        </LinearLayout>
+        <com.dream.will.hydrogenballoon.customview.CollapseTextView
+            android:id="@+id/destination_con_useractivity_descri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!--app:contentTextColor="#cccccc"
+        app:titleTextColor="@color/black"
+        app:tipsTextColor="@color/colorPrimary"-->
+
+        <View style="@style/destination_item_line_style" />
+
+        <Button
+            android:id="@+id/destination_con_useractivity_btn"
+            style="@style/destination_item_btn_style"
+            android:text="1992篇北京游记" />
+    </LinearLayout>
+</LinearLayout>

@@ -14,5 +14,4 @@
         android:background="@color/white"
         android:layout_height="@dimen/home_search_high" />
 
-
 </LinearLayout>

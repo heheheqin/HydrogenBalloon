@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_near_destination_linggan"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dream.will.hydrogenballoon.ui.NearDestinationLingganActivity">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:padding="18dp"
+        android:src="@drawable/icon_plan_scenery" />
+
+    <TextView
+        android:id="@+id/topic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/image"
+        android:text="东平洲：看香港第一抹阳光"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/visit_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/topic"
+        android:layout_below="@+id/topic"
+        android:layout_marginTop="5dp"
+        android:text="距离25公里"
+        android:textColor="@color/wanto_text_gray"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/big_image"
+            android:layout_width="match_parent"
+            android:layout_height="220dp" />
+
+        <TextView
+            android:id="@+id/introduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:text="每年冬天，香港湿地公园都会成为珍稀生物黑面琵鹭的乐土。全球仅余3000余只的黑面琵鹭，从朝鲜半岛千里迢迢赶到香港，向国人展现出它们如同天使般的优雅身姿。\r\n\r\n香港湿地公园位于新界天水围，园内在靠近滩涂的地方设有三间观鸟屋，屋里设有椅子和望远镜，可以上到三楼眺望附近的景致，退潮时在一楼也可观赏到多种鸭、鹭鸟和琵鹭。" />
+
+        <TextView
+            android:id="@+id/show_gonglue"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/cha_kan_gonglue_shape"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="查看攻略" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
