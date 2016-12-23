@@ -133,6 +133,7 @@ public class NearDestinationViewT {
                 intent.putExtra(Constant.KEY_GONGLV_INTENT_NAME,"附近目的地");
                 intent.putExtra(Constant.KEY_GONGLV_INTENT_TYPE, Constant.KEY_TYPE_NEAR_TRUE);
                 context.startActivity(intent);
+
                 Toast.makeText(context, ""+more1.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -143,7 +144,8 @@ public class NearDestinationViewT {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,dataBean1.getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, dataBean1.getName(), Toast.LENGTH_SHORT).show();
+                //显示在 最近想去 并且保存到数据库
+//                Toast.makeText(context, dataBean1.getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         city_image2.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +154,8 @@ public class NearDestinationViewT {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,dataBean2.getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, dataBean2.getName(), Toast.LENGTH_SHORT).show();
+                //显示在 最近想去 并且保存到数据库
+//                Toast.makeText(context, dataBean2.getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         city_image3.setOnClickListener(new View.OnClickListener() {
@@ -161,11 +164,14 @@ public class NearDestinationViewT {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,dataBean3.getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, dataBean3.getName(), Toast.LENGTH_SHORT).show();
+                //显示在 最近想去 并且保存到数据库
+//                Toast.makeText(context, dataBean3.getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
 
     }
+
+
 
 
 }

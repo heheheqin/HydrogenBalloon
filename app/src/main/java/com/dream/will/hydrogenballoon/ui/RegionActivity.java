@@ -179,6 +179,6 @@ public class RegionActivity extends SwipeBackActivity implements AdapterView.OnI
         intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,data.get(position).getId());
         startActivity(intent);
         //跳转到新界面
-//        Toast.makeText(this, "" + data.get(position).getName(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "" + data.get(position).getUserName(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,6 +1,5 @@
 package com.dream.will.hydrogenballoon.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -103,7 +102,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.search_text:{
                 //跳转搜索页面
-                startActivity(new Intent(HomeActivity.this,ShowPicActivity.class));
+//                startActivity(new Intent(HomeActivity.this,ShowPicActivity.class));
 
             }break;
         }

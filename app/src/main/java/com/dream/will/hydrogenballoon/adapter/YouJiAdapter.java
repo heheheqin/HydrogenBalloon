@@ -18,10 +18,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.dream.will.hydrogenballoon.R;
+import com.dream.will.hydrogenballoon.bean.UrlString;
 import com.dream.will.hydrogenballoon.bean.YouJiBean;
+import com.dream.will.hydrogenballoon.content.IntentConstant;
 import com.dream.will.hydrogenballoon.other.UtilString;
 import com.dream.will.hydrogenballoon.ui.PersonalHomepage;
+import com.dream.will.hydrogenballoon.ui.ShowPicActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -119,15 +123,15 @@ public class YouJiAdapter extends RecyclerView.Adapter<YouJiAdapter.MyViewHolder
             int width = bean.getActivity().getContents().get(0).getWidth();
             int widthPixels = context.getResources().getDisplayMetrics().widthPixels;
 
-            float per =0;
-            if(width>widthPixels){
-                per = (float)widthPixels / (float) width;
+            float per = 0;
+            if (width > widthPixels) {
+                per = (float) widthPixels / (float) width;
                 layoutParams.height = (int) ((bean.getActivity().getContents().get(0).getHeight()) * per);
                 layoutParams.width = (int) ((bean.getActivity().getContents().get(0).getWidth()) * per);
-            }else{
-                per = (float)widthPixels / (float) width ;
+            } else {
+                per = (float) widthPixels / (float) width;
                 layoutParams.height = (int) ((bean.getActivity().getContents().get(0).getHeight()) * per);
-                layoutParams.width = (int) (widthPixels );
+                layoutParams.width = (int) (widthPixels);
             }
             Log.d("print", " --per--->>" + per);
 
@@ -140,12 +144,22 @@ public class YouJiAdapter extends RecyclerView.Adapter<YouJiAdapter.MyViewHolder
                     .dontAnimate()
                     .into(iv_big);
 
-                  /*  iv_big.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                        }
-                    });*/
+            iv_big.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //跳转到showPicActivity界面显示图片细节
+                    ArrayList<UrlString> url = new ArrayList<>();
+                    List<YouJiBean.DataBean.ActivityBean.ContentsBean> contents = bean.getActivity().getContents();
+                    for (int i = 0; i < contents.size(); i++) {
+                        UrlString e = new UrlString(contents.get(i).getPhoto_url(), (String) contents.get(i).getCaption());
+                        url.add(e);
+                    }
+                    Intent intent = new Intent(context, ShowPicActivity.class);
+                    intent.putExtra(IntentConstant.KEY_SHOW_PIC_CURRENT, 1);
+                    intent.putParcelableArrayListExtra(IntentConstant.KEY_SHOW_PIC_URL, url);
+                    context.startActivity(intent);
+                }
+            });
 
 
             //大图下面的小图
@@ -162,13 +176,24 @@ public class YouJiAdapter extends RecyclerView.Adapter<YouJiAdapter.MyViewHolder
                         .asBitmap()
                         .dontAnimate()
                         .into(imageView);
-/*
-                        imageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
 
-                            }
-                        });*/
+                final int finalI = i;
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //跳转到showPicActivity界面显示图片细节
+                        ArrayList<UrlString> url = new ArrayList<>();
+                        List<YouJiBean.DataBean.ActivityBean.ContentsBean> contents = bean.getActivity().getContents();
+                        for (int i = 0; i < contents.size(); i++) {
+                            UrlString e = new UrlString(contents.get(i).getPhoto_url(), (String) contents.get(i).getCaption());
+                            url.add(e);
+                        }
+                        Intent intent = new Intent(context, ShowPicActivity.class);
+                        intent.putExtra(IntentConstant.KEY_SHOW_PIC_CURRENT, finalI+1);
+                        intent.putParcelableArrayListExtra(IntentConstant.KEY_SHOW_PIC_URL, url);
+                        context.startActivity(intent);
+                    }
+                });
 
                 layout.addView(imageView, params);
             }

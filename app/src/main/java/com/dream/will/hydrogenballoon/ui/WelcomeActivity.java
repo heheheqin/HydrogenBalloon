@@ -24,7 +24,6 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         initView();
         init();
-
     }
 
     private void init() {
@@ -42,7 +41,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.anim_activity_in_right,R.anim.anim_activity_out_left);
                     finish();
                 }
-            }, 2000);
+            }, 1000);
         } else {
             iv_welcome.postDelayed(new Runnable() {
                 @Override
@@ -51,7 +50,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.anim_activity_in_right,R.anim.anim_activity_out_left);
                     finish();
                 }
-            }, 2000);
+            }, 1000);
         }
     }
 

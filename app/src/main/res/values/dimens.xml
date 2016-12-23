@@ -26,8 +26,8 @@
     <dimen name="collectionView_height">150dp</dimen>
     <dimen name="collectionView_Title_textSize">18sp</dimen>
     <dimen name="collectionView_subTitle_textSize">16sp</dimen>
-    <!--<dimen name="destination_userActivity_topic_textSize">18sp</dimen>-->
-    <!--<dimen name="destination_userActivity_descri_textSize">16sp</dimen>-->
+    <!--<dimen userName="destination_userActivity_topic_textSize">18sp</dimen>-->
+    <!--<dimen userName="destination_userActivity_descri_textSize">16sp</dimen>-->
     <!--collapseTextView-->
     <dimen name="default_title_size">20sp</dimen>
     <dimen name="default_content_size">16sp</dimen>

@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/banner_detail_text_margin"
             android:layout_toRightOf="@+id/iv_banner_person_head"
-            android:text="name"
+            android:text="userName"
             android:textColor="@color/black" />
         <LinearLayout
             android:layout_alignLeft="@+id/item_banner_detail_person_name"

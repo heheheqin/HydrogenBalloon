@@ -24,7 +24,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:textColor="@color/black"
-        android:text="珠海1" />
+         />
 
     <TextView
         android:id="@+id/city_name_en1"
@@ -36,7 +36,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginLeft="15dp"
         android:textColor="@color/wanto_text_gray"
-        android:text="Yunnan" />
+         />
 
     <View
         android:layout_below="@+id/city_image1"

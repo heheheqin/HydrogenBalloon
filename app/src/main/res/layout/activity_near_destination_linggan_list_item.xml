@@ -19,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/image"
-        android:text="东平洲：看香港第一抹阳光"
         android:textColor="@color/black"
         android:textSize="15sp" />
 
@@ -30,7 +29,6 @@
         android:layout_alignLeft="@+id/topic"
         android:layout_below="@+id/topic"
         android:layout_marginTop="5dp"
-        android:text="距离25公里"
         android:textColor="@color/wanto_text_gray"
         android:textSize="13sp" />
 
@@ -56,7 +54,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:textSize="15sp"
-            android:text="每年冬天，香港湿地公园都会成为珍稀生物黑面琵鹭的乐土。全球仅余3000余只的黑面琵鹭，从朝鲜半岛千里迢迢赶到香港，向国人展现出它们如同天使般的优雅身姿。\r\n\r\n香港湿地公园位于新界天水围，园内在靠近滩涂的地方设有三间观鸟屋，屋里设有椅子和望远镜，可以上到三楼眺望附近的景致，退潮时在一楼也可观赏到多种鸭、鹭鸟和琵鹭。" />
+            />
 
         <TextView
             android:id="@+id/show_gonglue"

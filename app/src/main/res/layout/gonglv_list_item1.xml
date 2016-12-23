@@ -7,7 +7,6 @@
 
     <TextView
         android:id="@+id/hot_destination"
-        android:text="大陆热门目的地"
         style="@style/gonglv_list_hot_destination_title" />
 
     <View style="@style/gonglv_list_item_view" />
@@ -32,12 +31,10 @@
             <TextView
                 android:id="@+id/city_name1"
                 android:layout_below="@+id/city_image1"
-                android:text="珠海1"
                 style="@style/gonglv_list_item_cityname_style" />
             <TextView
                 android:id="@+id/city_name_en1"
                 android:layout_below="@+id/city_name"
-                android:text="Yunnan"
                 style="@style/gonglv_list_item_cityname_en_style" />
         </LinearLayout>
         <LinearLayout
@@ -52,12 +49,10 @@
             <TextView
                 android:id="@+id/city_name2"
                 android:layout_below="@+id/city_image1"
-                android:text="珠海1"
                 style="@style/gonglv_list_item_cityname_style" />
             <TextView
                 android:id="@+id/city_name_en2"
                 android:layout_below="@+id/city_name"
-                android:text="Yunnan"
                 style="@style/gonglv_list_item_cityname_en_style" />
         </LinearLayout>
         <LinearLayout
@@ -72,12 +67,10 @@
             <TextView
                 android:id="@+id/city_name3"
                 android:layout_below="@+id/city_image1"
-                android:text="珠海1"
                 style="@style/gonglv_list_item_cityname_style" />
             <TextView
                 android:id="@+id/city_name_en3"
                 android:layout_below="@+id/city_name"
-                android:text="Yunnan"
                 style="@style/gonglv_list_item_cityname_en_style" />
         </LinearLayout>
 
@@ -104,12 +97,10 @@
             <TextView
                 android:id="@+id/city_name4"
                 android:layout_below="@+id/city_image1"
-                android:text="珠海1"
                 style="@style/gonglv_list_item_cityname_style" />
             <TextView
                 android:id="@+id/city_name_en4"
                 android:layout_below="@+id/city_name"
-                android:text="Yunnan"
                 style="@style/gonglv_list_item_cityname_en_style" />
         </LinearLayout>
         <LinearLayout
@@ -124,12 +115,10 @@
             <TextView
                 android:id="@+id/city_name5"
                 android:layout_below="@+id/city_image1"
-                android:text="珠海1"
                 style="@style/gonglv_list_item_cityname_style" />
             <TextView
                 android:id="@+id/city_name_en5"
                 android:layout_below="@+id/city_name"
-                android:text="Yunnan"
                 style="@style/gonglv_list_item_cityname_en_style" />
         </LinearLayout>
         <LinearLayout
@@ -144,12 +133,10 @@
             <TextView
                 android:id="@+id/city_name6"
                 android:layout_below="@+id/city_image1"
-                android:text="珠海1"
                 style="@style/gonglv_list_item_cityname_style" />
             <TextView
                 android:id="@+id/city_name_en6"
                 android:layout_below="@+id/city_name"
-                android:text="Yunnan"
                 style="@style/gonglv_list_item_cityname_en_style" />
         </LinearLayout>
 
@@ -160,7 +147,6 @@
 
     <TextView
         android:layout_marginTop="5dp"
-        android:text="更多"
         android:textSize="16sp"
         android:textColor="@color/colorPrimaryDark"
         android:id="@+id/more"

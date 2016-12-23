@@ -15,11 +15,13 @@ import com.dream.will.hydrogenballoon.R;
 import com.dream.will.hydrogenballoon.adapter.GonglueRecyclAdapter;
 import com.dream.will.hydrogenballoon.adapter.GonglvListViewAdapter;
 import com.dream.will.hydrogenballoon.apimanage.ApiConstant;
+import com.dream.will.hydrogenballoon.bean.DbUserBean;
 import com.dream.will.hydrogenballoon.bean.GonglvListBean;
 import com.dream.will.hydrogenballoon.customview.BannerView;
 import com.dream.will.hydrogenballoon.customview.NearDestinationView;
 import com.dream.will.hydrogenballoon.customview.NearDestinationViewT;
 import com.dream.will.hydrogenballoon.customview.WantToView;
+import com.dream.will.hydrogenballoon.db.DbDao;
 import com.dream.will.hydrogenballoon.inter.IGongLv;
 
 import java.util.ArrayList;
@@ -38,11 +40,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GonglvFragment extends Fragment {
 
+    public static WantToView wantToView;
     List<GonglvListBean.DataBean> data;
     List<String> data1;
     private RecyclerView recyclerView;
     private GonglvListViewAdapter adapter2;
     private GonglueRecyclAdapter recyclAdapter;
+    private List<DbUserBean> loctionList;
 
     // "lat": 25.0454006195,
     //"  lng": 102.7099990845,
@@ -56,9 +60,11 @@ public class GonglvFragment extends Fragment {
         super.onCreate(savedInstanceState);
         data = new ArrayList<>();
         data1 = new ArrayList<>();
+        loctionList = new ArrayList<>();
         for (int i = 0; i < 40; i++) {
             data1.add("hhhh");
         }
+        loctionList.addAll(DbDao.getLoction(MyApp.getInstance().dBhelper));
     }
 
     @Nullable
@@ -74,12 +80,13 @@ public class GonglvFragment extends Fragment {
         //添加banner
         BannerView bannerView = new BannerView(getActivity());
         //添加最近想去
-        WantToView wantToView = new WantToView(getActivity());
+        wantToView = new WantToView(getActivity());
+        wantToView.setText(loctionList);
         //添加附近目的地
         NearDestinationView nearDestinationView = new NearDestinationView(getContext());
         NearDestinationViewT nearDestinationViewT = new NearDestinationViewT(getContext());
         View view1 = nearDestinationViewT.initData();
-        nearDestinationViewT.getHostListData(MyApp.getInstance().lat,MyApp.getInstance().lng);
+        nearDestinationViewT.getHostListData(MyApp.getInstance().lat, MyApp.getInstance().lng);
 //        nearDestinationView.getHostListData(MyApp.getInstance().lat,MyApp.getInstance().lng);
         //listView数据
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

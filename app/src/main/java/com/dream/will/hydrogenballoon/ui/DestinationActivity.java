@@ -1,5 +1,6 @@
 package com.dream.will.hydrogenballoon.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,10 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.dream.will.hydrogenballoon.MyApp;
 import com.dream.will.hydrogenballoon.R;
 import com.dream.will.hydrogenballoon.apimanage.ApiConstant;
 import com.dream.will.hydrogenballoon.apimanage.IDestinationApi;
 import com.dream.will.hydrogenballoon.apimanage.RetrofitManager;
+import com.dream.will.hydrogenballoon.bean.DbUserBean;
 import com.dream.will.hydrogenballoon.bean.Destinations;
 import com.dream.will.hydrogenballoon.content.DestinationConstent;
 import com.dream.will.hydrogenballoon.content.IntentConstant;
@@ -28,6 +31,7 @@ import com.dream.will.hydrogenballoon.customview.CollapseTextView;
 import com.dream.will.hydrogenballoon.customview.CollectionView;
 import com.dream.will.hydrogenballoon.customview.DestinationView;
 import com.dream.will.hydrogenballoon.customview.GoodsView;
+import com.dream.will.hydrogenballoon.fragment.GonglvFragment;
 import com.dream.will.hydrogenballoon.inter.OnDestinationClickListener;
 import com.dream.will.hydrogenballoon.utils.DisplayUtil;
 
@@ -140,6 +144,9 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
         String name_en = parent_destination.getName_en();
         String name = parent_destination.getName();
         String photo_url = parent_destination.getPhoto_url();
+        //保存数据到数据库  并显示
+        long currentTime = System.currentTimeMillis();
+        GonglvFragment.wantToView.setText(new DbUserBean(MyApp.getInstance().USERNAME,name,main_id+"",currentTime+""));
         mToolbar.setTitle(name);
         mDestinationContentHeadview.setTv_title(name);
         mDestinationContentHeadview.setTv_subtitle(name_en);
@@ -319,6 +326,10 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
             case DestinationConstent.SECTIONS_DESTINATION: {
               /*跳转到新的目的地页面*/
                 int id = (int) tag;
+                Intent intent = new Intent(this, DestinationActivity.class);
+                intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,id);
+                startActivity(intent);
+//                showAndsave(destinations.get(0).getUserName());
                 Toast.makeText(this, id + "新的目的地页面", Toast.LENGTH_SHORT).show();
             }
             break;
@@ -334,4 +345,5 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

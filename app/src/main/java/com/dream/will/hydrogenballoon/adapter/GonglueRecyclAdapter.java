@@ -158,7 +158,7 @@ public class GonglueRecyclAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,destinations.get(0).getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, "" + destinations.get(0).getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" + destinations.get(0).getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         holderTwo.city_image2.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +167,7 @@ public class GonglueRecyclAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,destinations.get(1).getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, "" + destinations.get(1).getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" + destinations.get(1).getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         holderTwo.city_image3.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +176,7 @@ public class GonglueRecyclAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,destinations.get(2).getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, "" + destinations.get(2).getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" + destinations.get(2).getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         holderTwo.hot_destination.setText(dataBean.getName());
@@ -213,7 +213,7 @@ public class GonglueRecyclAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,destinations.get(3).getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, "" + destinations.get(3).getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" + destinations.get(3).getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         holderTwo.city_image5.setOnClickListener(new View.OnClickListener() {
@@ -222,7 +222,7 @@ public class GonglueRecyclAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,destinations.get(4).getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, "" + destinations.get(4).getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" + destinations.get(4).getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         holderTwo.city_image6.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +231,7 @@ public class GonglueRecyclAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,destinations.get(5).getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, "" + destinations.get(5).getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" + destinations.get(5).getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         GonglvListBean.DataBean.DestinationsBean destinationsBean3 = destinations.get(3);
@@ -260,7 +260,7 @@ public class GonglueRecyclAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,destinations.get(0).getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, "" + destinations.get(0).getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" + destinations.get(0).getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         holderOne.city_image2.setOnClickListener(new View.OnClickListener() {
@@ -269,7 +269,7 @@ public class GonglueRecyclAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,destinations.get(1).getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, "" + destinations.get(1).getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" + destinations.get(1).getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         holderOne.city_image3.setOnClickListener(new View.OnClickListener() {
@@ -278,7 +278,7 @@ public class GonglueRecyclAdapter extends RecyclerView.Adapter {
                 Intent intent = new Intent(context, DestinationActivity.class);
                 intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,destinations.get(2).getId());
                 context.startActivity(intent);
-//                Toast.makeText(context, "" + destinations.get(2).getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" + destinations.get(2).getUserName(), Toast.LENGTH_SHORT).show();
             }
         });
         holderOne.hot_destination.setText(dataBean.getName());
@@ -409,4 +409,5 @@ public class GonglueRecyclAdapter extends RecyclerView.Adapter {
             super(itemView);
         }
     }
+
 }

@@ -32,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/banner_detail_text_margin"
             android:layout_toRightOf="@+id/iv_banner_person_head"
-            android:text="name"
+            android:text="userName"
             android:textColor="@color/black" />
 
         <TextView
