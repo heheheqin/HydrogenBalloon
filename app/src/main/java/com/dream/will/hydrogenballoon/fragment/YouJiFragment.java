@@ -1,5 +1,6 @@
 package com.dream.will.hydrogenballoon.fragment;
 
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -74,7 +75,7 @@ public class YouJiFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         data = new ArrayList<>();
-        init(page);
+        initdata(1);
 
     }
 
@@ -87,7 +88,7 @@ public class YouJiFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        init(1);
+        initdata(1);
         recyclerView = (RecyclerView) view.findViewById(R.id.youji_recyclerView);
 
         //下拉刷新
@@ -96,7 +97,7 @@ public class YouJiFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                init(1);
+                initdata(1);
                 Message message = Message.obtain();
                 message.what = 0;
                 handler.sendMessage(message);
@@ -116,7 +117,8 @@ public class YouJiFragment extends Fragment {
             @Override
             public void onLoadMore(int currentPage) {
                 page++;
-                addMore(page);
+               // addMore(page);
+                loadMore(page);
                 Log.d("print", "page====> "+page);
                 Message message = Message.obtain();
                 message.what = 1;
@@ -127,13 +129,78 @@ public class YouJiFragment extends Fragment {
         });
     }
 
+    private void loadMore(int page) {
+        Log.d("print", " addMore ----");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstant.HOST)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        IYouJI iYouJI = retrofit.create(IYouJI.class);
+        Call<YouJiBean> call = iYouJI.getYOUJiBean(page);
+        call.enqueue(new Callback<YouJiBean>() {
+            @Override
+            public void onResponse(Call<YouJiBean> call, Response<YouJiBean> response) {
+                YouJiBean body = response.body();
+                List<YouJiBean.DataBean> dataBeen = body.getData();
+                data.addAll(dataBeen);
+                // adapter.notifyDataSetChanged();
+                Message message = Message.obtain();
+                message.what = 1;
+                handler.sendMessage(message);
+                Log.d("print", " 上拉加载");
 
-    private void initAdapter() {
-        adapter = new YouJiAdapter(data, getActivity());
+
+            }
+
+            @Override
+            public void onFailure(Call<YouJiBean> call, Throwable t) {
+
+            }
+        });
 
     }
 
-    private void init(int page) {
+    private void initdata(int i) {
+        Log.d("print", " init ----");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstant.HOST)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        IYouJI iYouJI = retrofit.create(IYouJI.class);
+        Call<YouJiBean> call = iYouJI.getYOUJiBean(page);
+        call.enqueue(new Callback<YouJiBean>() {
+            @Override
+            public void onResponse(Call<YouJiBean> call, Response<YouJiBean> response) {
+                YouJiBean body = response.body();
+                List<YouJiBean.DataBean> dataBeen = body.getData();
+                data.clear();
+                data.addAll(dataBeen);
+
+
+               // initAdapter();
+                newAdapter();
+
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<YouJiBean> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void newAdapter() {
+        adapter = new YouJiAdapter(data, getActivity());
+    }
+
+
+    /*private void initAdapter() {
+        adapter = new YouJiAdapter(data, getActivity());
+
+    }*/
+
+   /* private void init(int page) {
         Log.d("print", " init ----");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiConstant.HOST)
@@ -175,6 +242,75 @@ public class YouJiFragment extends Fragment {
                 YouJiBean body = response.body();
                 List<YouJiBean.DataBean> dataBeen = body.getData();
                 data.addAll(dataBeen);
+               // adapter.notifyDataSetChanged();
+                Message message = Message.obtain();
+                message.what = 1;
+                handler.sendMessage(message);
+                Log.d("print", " 上拉加载");
+
+
+            }
+
+            @Override
+            public void onFailure(Call<YouJiBean> call, Throwable t) {
+
+            }
+        });
+    }*/
+
+
+
+
+
+//1
+    private void initAdapter() {
+        adapter = new YouJiAdapter(data, getActivity());
+
+    }
+
+    private void init(int page) {
+        Log.d("print", " init ----");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstant.HOST)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        IYouJI iYouJI = retrofit.create(IYouJI.class);
+        Call<YouJiBean> call = iYouJI.getYOUJiBean(page);
+        call.enqueue(new Callback<YouJiBean>() {
+            @Override
+            public void onResponse(Call<YouJiBean> call, Response<YouJiBean> response) {
+                YouJiBean body = response.body();
+                List<YouJiBean.DataBean> dataBeen = body.getData();
+                data.clear();
+                data.addAll(dataBeen);
+
+
+                initAdapter();
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<YouJiBean> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void addMore(int page) {
+        Log.d("print", " addMore ----");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstant.HOST)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        IYouJI iYouJI = retrofit.create(IYouJI.class);
+        Call<YouJiBean> call = iYouJI.getYOUJiBean(page);
+        call.enqueue(new Callback<YouJiBean>() {
+            @Override
+            public void onResponse(Call<YouJiBean> call, Response<YouJiBean> response) {
+                YouJiBean body = response.body();
+                List<YouJiBean.DataBean> dataBeen = body.getData();
+                data.addAll(dataBeen);
                 // adapter.notifyDataSetChanged();
                 Message message = Message.obtain();
                 message.what = 1;
@@ -190,6 +326,7 @@ public class YouJiFragment extends Fragment {
             }
         });
     }
+
 
 
 }

@@ -2,6 +2,7 @@ package com.dream.will.hydrogenballoon.customview;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.dream.will.hydrogenballoon.R;
 import com.dream.will.hydrogenballoon.content.DestinationConstent;
 import com.dream.will.hydrogenballoon.inter.OnDestinationClickListener;
+import com.dream.will.hydrogenballoon.utils.DisplayUtil;
 
 /**
  * Created by Karlo on 2016/12/19.
@@ -47,6 +49,7 @@ public class CollectionView extends FrameLayout implements View.OnClickListener 
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.CENTER);
         tv_title = new TextView(context);
+        tv_title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         tv_title.setTextColor(Color.WHITE);
         LinearLayout.LayoutParams titleParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         titleParams.setMargins(0, 0, 0, 5);
@@ -65,9 +68,7 @@ public class CollectionView extends FrameLayout implements View.OnClickListener 
     }
 
     public void setTv_titleSize(float size) {
-        if (tv_title != null) {
-            tv_title.setTextSize(size);
-        }
+        tv_title.setTextSize(size);
     }
 
     public void setTv_subtitle(String subtitle) {
@@ -77,13 +78,11 @@ public class CollectionView extends FrameLayout implements View.OnClickListener 
     }
 
     public void setTv_subtitleSize(float size) {
-        if (tv_subtitle != null) {
-            tv_subtitle.setTextSize(size);
-        }
+        tv_subtitle.setTextSize(size);
     }
 
     public void setImg(String url) {
-        Glide.with(context).load(url).placeholder(R.color.picture_placeholder).into(iv);
+        Glide.with(context).load(url).asBitmap().dontAnimate().placeholder(R.color.picture_placeholder).into(iv);
     }
 
     public void setListener(OnDestinationClickListener listener) {
@@ -93,7 +92,7 @@ public class CollectionView extends FrameLayout implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         if (listener != null) {
-            listener.onClick(DestinationConstent.SECTIONS_COLLECTION,v);
+            listener.onClick(DestinationConstent.SECTIONS_COLLECTION, v);
         }
     }
 }

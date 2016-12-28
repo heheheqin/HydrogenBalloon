@@ -63,6 +63,7 @@ public class DestinationView extends HorizontalScrollView implements View.OnClic
         for (Destinations.DataBean.SectionsBean.ModelsBean modelsBean : models) {
             ChildView childView = new ChildView(context);
             childView.setTag(modelsBean.getId());
+//            childView.setTag(R.string.destination_name,modelsBean.getName());
             childView.setTv_Title(modelsBean.getName());
             childView.setTv_Title_en(modelsBean.getName_en());
             childView.setImg(modelsBean.getPhoto_url());

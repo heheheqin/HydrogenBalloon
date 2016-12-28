@@ -37,5 +37,9 @@
     <dimen name="gonglv_list_item_margin_left">10dp</dimen>
 
     <!--youji_recyclerView_item_间隔-->
-    <dimen name="space">8dp</dimen>
+
+    <dimen name="mine_margin">20dp</dimen>
+
+
+
 </resources>

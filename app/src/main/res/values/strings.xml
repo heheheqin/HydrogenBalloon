@@ -6,7 +6,6 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="destination_goods_type">destination_goods</string>
-
     <declare-styleable name="CollapseTextView">
         <attr name="mTitleText" format="string" />
         <attr name="mTitleTextColor" format="color|reference" />
@@ -19,4 +18,6 @@
         <attr name="mTipsTextColor" format="color|reference" />
         <attr name="mTipsTextSize" format="dimension" />
     </declare-styleable>
+    <string name="destination_name">destination_name</string>
+    <string name="destination_user_photoSet">photoSet</string>
 </resources>

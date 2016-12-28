@@ -99,7 +99,10 @@ public class ApiConstant {
     /*个人主页*/
     //头部信息: api/v1/users/10586/profiles.json
     public  static final String PERSONAL_HOMEPAGE_HEADINFO= "api/v1/users/{id}/profiles.json";
-
+    //详细PersonalHomePageDeatilBean
+    public static final String PERSONAL_HOMEPAGE_DEATIL= "api/v1/users/{id}/user_activities.json?";
+    //详细PersonalHomePageGroupedBean
+    public static final String PERSONAL_HOMEPAGE_GROUPED= "api/v1/users/{id}/user_activities.json?grouped=1";
 
 
 }

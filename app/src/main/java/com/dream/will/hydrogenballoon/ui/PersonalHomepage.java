@@ -1,10 +1,12 @@
 package com.dream.will.hydrogenballoon.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +23,7 @@ import com.dream.will.hydrogenballoon.fragment.personalhomepage_fragment.Persona
 import com.dream.will.hydrogenballoon.fragment.personalhomepage_fragment.PersonalHomepage_GroupedFragment;
 import com.dream.will.hydrogenballoon.fragment.personalhomepage_fragment.PersonalHomepage_PhotoFragment;
 import com.dream.will.hydrogenballoon.inter.IPersonalHomepage;
-
+import com.dream.will.hydrogenballoon.other.UtilString;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +32,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class PersonalHomepage extends BaseActivity  {
+public class PersonalHomepage extends AppCompatActivity {
 
 
     private ImageView homepage_header_photo_bg;
@@ -47,16 +49,21 @@ public class PersonalHomepage extends BaseActivity  {
     private  ViewPager  personal_viewpager;
     private PersonalHomePageHeadBean.DataBean dataBean;
     private Fragment [] phfragments= new Fragment[3]; ;
-    private  String userID="10586";
-
+    private  int userID=10586;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_homepage);
         initView();
+
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+        String extra = intent.getStringExtra(UtilString.USERID);
+        Log.d("print", " userID"+extra);
+        userID=Integer.valueOf(extra).intValue();
         initFragmnet();
         initDatas(userID);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -64,10 +71,18 @@ public class PersonalHomepage extends BaseActivity  {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 showFragment(checkedId);
 
+
             }
 
 
         });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             finish();
+            }
+        });
+
 
     }
 
@@ -77,6 +92,7 @@ public class PersonalHomepage extends BaseActivity  {
         phfragments[0]=new PersonalHomepage_DetailFragment();
         phfragments[1] =new PersonalHomepage_PhotoFragment();
         phfragments[2]=new PersonalHomepage_GroupedFragment();
+
 
         personal_viewpager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -128,10 +144,6 @@ public class PersonalHomepage extends BaseActivity  {
             }
         });
 
-
-
-
-
     }
 
     private void showFragment(int checkedId) {
@@ -150,8 +162,13 @@ public class PersonalHomepage extends BaseActivity  {
 
     }
 
-    void initDatas(String userID) {
+    void initDatas(int userID) {
 
+        Bundle bundle = new Bundle();
+        bundle.putInt("userID",userID);
+        phfragments[0].setArguments(bundle);
+        phfragments[1].setArguments(bundle);
+        phfragments[2].setArguments(bundle);
         dataBean= new PersonalHomePageHeadBean.DataBean();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -191,23 +208,13 @@ public class PersonalHomepage extends BaseActivity  {
                 }
                 followings_count.setText(""+dataBean.getFollowings_count());
                 followers_count.setText(""+dataBean.getFollowers_count());
-                Glide.with(PersonalHomepage.this).load(dataBean1.getPhoto_url()).into(header_photo);
-
-                Glide.with(PersonalHomepage.this).load(dataBean1.getHeader_photo().getPhoto_url()).into(homepage_header_photo_bg);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                Glide.with(PersonalHomepage.this).load(dataBean1.getPhoto_url())
+                        .asBitmap()
+                        .dontAnimate().into(header_photo);
+                Glide.with(PersonalHomepage.this).load(dataBean1.getHeader_photo().getPhoto_url())
+                        .asBitmap()
+                        .dontAnimate()
+                        .into(homepage_header_photo_bg);
 
             }
 
@@ -220,6 +227,9 @@ public class PersonalHomepage extends BaseActivity  {
 
 
     }
+
+
+
 
     private void initView() {
         homepage_header_photo_bg = (ImageView) findViewById(R.id.homepage_header_photo_bg);
@@ -235,4 +245,7 @@ public class PersonalHomepage extends BaseActivity  {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         personal_viewpager = (ViewPager) findViewById(R.id.personal_viewpager);
     }
+
+
+
 }

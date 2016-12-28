@@ -2,9 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dream.will.hydrogenballoon">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
         android:name=".MyApp"
@@ -13,27 +18,33 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/NoActionBatAppTheme">
-        <activity android:name=".ui.WelcomeActivity"
-            android:theme="@style/myAppThemeFull">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="jiozajkPWel30i49y3oLMn2nzy869ppz" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-        <activity android:name=".ui.PlayVideoActivity"
-            android:theme="@style/myAppThemeFull"/>
         <activity
             android:name=".ui.HomeActivity"
-            android:theme="@style/NoActionBatAppTheme">
+            android:theme="@style/NoActionBatAppTheme"/>
 
+        <activity android:name=".ui.WelcomeActivity"
+            android:theme="@style/myAppThemeFull">
+                  <intent-filter>
+                      <action android:name="android.intent.action.MAIN" />
+                      <category android:name="android.intent.category.LAUNCHER"/>
+                  </intent-filter>
         </activity>
+
+        <activity android:name=".ui.PlayVideoActivity"
+            android:theme="@style/myAppThemeFull"/>
+
         <activity
             android:name=".ui.DestinationActivity"
-            android:theme="@style/NoActionBatAppTheme"></activity>
-        <activity android:name=".ui.PersonalHomepage" />
+            android:theme="@style/NoActionBatAppTheme"/>
+
+        <activity android:name=".ui.PersonalHomepage"
+            android:theme="@style/PHNoActionBatAppTheme"/>
         <activity android:name=".ui.HomeBannerDetailActivity" />
+
         <activity
             android:name=".ui.RegionActivity"
             android:theme="@style/BackNoActionBatAppTheme" />
@@ -42,6 +53,9 @@
             android:theme="@style/BackNoActionBatAppTheme" />
         <activity android:name=".ui.ShowPicActivity"
             android:theme="@style/myAppThemeFull"/>
+        <activity android:name=".ui.PerHpageQYJActivity"
+            android:theme="@style/NoActionBatAppTheme"
+            />
     </application>
 
 </manifest>

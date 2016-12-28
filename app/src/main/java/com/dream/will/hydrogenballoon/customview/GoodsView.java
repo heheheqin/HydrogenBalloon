@@ -1,6 +1,7 @@
 package com.dream.will.hydrogenballoon.customview;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -9,16 +10,20 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.dream.will.hydrogenballoon.R;
 import com.dream.will.hydrogenballoon.bean.Destinations;
 import com.dream.will.hydrogenballoon.content.DestinationConstent;
 import com.dream.will.hydrogenballoon.inter.OnDestinationClickListener;
 import com.dream.will.hydrogenballoon.ui.DestinationActivity;
+import com.dream.will.hydrogenballoon.utils.DisplayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +33,7 @@ import static android.R.attr.tag;
 import static android.R.attr.type;
 
 /**
+ * Goods :攻略，酒店，机票，自由行，跟团游，门票
  * Created by Karlo on 2016/12/20.
  */
 
@@ -73,18 +79,15 @@ public class GoodsView extends ViewPager {
     }
 
     private class GoodView extends LinearLayout implements OnClickListener {
-        private Context context;
         private LayoutParams params;
 
         public GoodView(Context context) {
             super(context);
-            this.context = context;
             init();
         }
 
         public GoodView(Context context, AttributeSet attrs) {
             super(context, attrs);
-            this.context = context;
             init();
         }
 
@@ -97,17 +100,10 @@ public class GoodsView extends ViewPager {
         }
 
         public void addView(Destinations.DataBean.GoodsBean bean) {
-            TextView tv = new TextView(context);
-            tv.setText(bean.getTitle());
-            tv.setGravity(Gravity.CENTER);
-            tv.setOnClickListener(this);
-            String type = bean.getType();
-            tv.setTag(goods_type_resId, type);
-            if (DestinationConstent.GOODS_WIKI.equals(type)) {
-                int id = bean.getWiki_destination().getId();
-                tv.setTag(id);
-            }
-            addView(tv, params);
+            ChildView childView = new ChildView(context);
+            childView.setChildData(bean);
+            childView.setOnClickListener(this);
+            addView(childView, params);
         }
 
         @Override
@@ -117,6 +113,47 @@ public class GoodsView extends ViewPager {
             }
         }
 
+        public class ChildView extends LinearLayout {
+            private TextView tv_text;
+            private ImageView iv_icon;
+
+            public ChildView(Context context) {
+                super(context);
+                initChild();
+            }
+
+            public ChildView(Context context, AttributeSet attrs) {
+                super(context, attrs);
+                initChild();
+            }
+
+            private void initChild() {
+                setOrientation(VERTICAL);
+                setBackgroundColor(Color.WHITE);
+                setGravity(Gravity.CENTER);
+                setPadding(0, 10, 0, 10);
+                LayoutParams tv_params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                LayoutParams iv_params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(context, 25), DisplayUtil.dip2px(context, 25));
+                iv_params.setMargins(0, 0, 0, 10);
+                tv_text = new TextView(context);
+                tv_text.setGravity(Gravity.CENTER);
+                iv_icon = new ImageView(context);
+                iv_icon.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                addView(iv_icon, iv_params);
+                addView(tv_text, tv_params);
+            }
+
+            public void setChildData(Destinations.DataBean.GoodsBean bean) {
+                Glide.with(context).load(bean.getPhoto_url()).asBitmap().dontAnimate().into(iv_icon);
+                tv_text.setText(bean.getTitle());
+                String type = bean.getType();
+                this.setTag(goods_type_resId, type);
+                if (DestinationConstent.GOODS_WIKI.equals(type)) {
+                    int id = bean.getWiki_destination().getId();
+                    this.setTag(id);
+                }
+            }
+        }
     }
 
     private class DestinationGoodsAdapter extends PagerAdapter {

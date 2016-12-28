@@ -21,6 +21,6 @@ public class XingChengDanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i("TAG", "onCreateView: ---------");
-        return inflater.inflate(R.layout.fragment,container,false);
+        return inflater.inflate(R.layout.xingcheng_fragement_layout,container,false);
     }
 }

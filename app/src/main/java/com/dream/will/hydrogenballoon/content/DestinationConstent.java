@@ -28,4 +28,5 @@ public class DestinationConstent {
     public static final String GOODS_CTRIP_GROUP_TRAVEL = "CtripGroupTravel";
     /*门票*/
     public static final String GOODS_CTRIP_TICKET = "CtripTicket";
+
 }

@@ -1806,11 +1806,13 @@ public class Destinations {
                         this.points = points;
                     }
 
+
                     public static class PointsBean {
                         private int id;
                         private int position;
                         private int time_cost;
                         private boolean is_custom;
+                        private PoiBean poi;
 
                         public static PointsBean objectFromData(String str) {
 
@@ -1847,6 +1849,175 @@ public class Destinations {
 
                         public void setIs_custom(boolean is_custom) {
                             this.is_custom = is_custom;
+                        }
+
+                        public PoiBean getPoi() {
+                            return poi;
+                        }
+
+                        public void setPoi(PoiBean poi) {
+                            this.poi = poi;
+                        }
+
+                        public static class PoiBean {
+                            private int id;
+                            private String name;
+                            private String name_en;
+                            private String name_pinyin;
+                            private int business_id;
+                            private String poi_type;
+                            private int district_id;
+                            private double lat;
+                            private double lng;
+                            private String location_name;
+                            private double blat;
+                            private double blng;
+                            private double youji_lat;
+                            private double youji_lng;
+                            private int youji_poi_id;
+                            private boolean is_in_china;
+                            private String youji_poi_name;
+
+                            public static PoiBean objectFromData(String str) {
+
+                                return new Gson().fromJson(str, PoiBean.class);
+                            }
+
+                            public int getId() {
+                                return id;
+                            }
+
+                            public void setId(int id) {
+                                this.id = id;
+                            }
+
+                            public String getName() {
+                                return name;
+                            }
+
+                            public void setName(String name) {
+                                this.name = name;
+                            }
+
+                            public String getName_en() {
+                                return name_en;
+                            }
+
+                            public void setName_en(String name_en) {
+                                this.name_en = name_en;
+                            }
+
+                            public String getName_pinyin() {
+                                return name_pinyin;
+                            }
+
+                            public void setName_pinyin(String name_pinyin) {
+                                this.name_pinyin = name_pinyin;
+                            }
+
+                            public int getBusiness_id() {
+                                return business_id;
+                            }
+
+                            public void setBusiness_id(int business_id) {
+                                this.business_id = business_id;
+                            }
+
+                            public String getPoi_type() {
+                                return poi_type;
+                            }
+
+                            public void setPoi_type(String poi_type) {
+                                this.poi_type = poi_type;
+                            }
+
+                            public int getDistrict_id() {
+                                return district_id;
+                            }
+
+                            public void setDistrict_id(int district_id) {
+                                this.district_id = district_id;
+                            }
+
+                            public double getLat() {
+                                return lat;
+                            }
+
+                            public void setLat(double lat) {
+                                this.lat = lat;
+                            }
+
+                            public double getLng() {
+                                return lng;
+                            }
+
+                            public void setLng(double lng) {
+                                this.lng = lng;
+                            }
+
+                            public String getLocation_name() {
+                                return location_name;
+                            }
+
+                            public void setLocation_name(String location_name) {
+                                this.location_name = location_name;
+                            }
+
+                            public double getBlat() {
+                                return blat;
+                            }
+
+                            public void setBlat(double blat) {
+                                this.blat = blat;
+                            }
+
+                            public double getBlng() {
+                                return blng;
+                            }
+
+                            public void setBlng(double blng) {
+                                this.blng = blng;
+                            }
+
+                            public double getYouji_lat() {
+                                return youji_lat;
+                            }
+
+                            public void setYouji_lat(double youji_lat) {
+                                this.youji_lat = youji_lat;
+                            }
+
+                            public double getYouji_lng() {
+                                return youji_lng;
+                            }
+
+                            public void setYouji_lng(double youji_lng) {
+                                this.youji_lng = youji_lng;
+                            }
+
+                            public int getYouji_poi_id() {
+                                return youji_poi_id;
+                            }
+
+                            public void setYouji_poi_id(int youji_poi_id) {
+                                this.youji_poi_id = youji_poi_id;
+                            }
+
+                            public boolean isIs_in_china() {
+                                return is_in_china;
+                            }
+
+                            public void setIs_in_china(boolean is_in_china) {
+                                this.is_in_china = is_in_china;
+                            }
+
+                            public String getYouji_poi_name() {
+                                return youji_poi_name;
+                            }
+
+                            public void setYouji_poi_name(String youji_poi_name) {
+                                this.youji_poi_name = youji_poi_name;
+                            }
                         }
                     }
                 }

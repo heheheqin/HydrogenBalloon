@@ -46,27 +46,41 @@
 
                     />
 
-                <ImageView
+
+                <com.dream.will.hydrogenballoon.customview.RoundHeadFrameView
+                    android:id="@+id/header_photo"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="40dp"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                     app:border_color="@color/white"
+                    app:border_width="2dp"
+                    app:shape_type="round"
+
+                    />
+
+              <!--  <ImageView
 
                     android:id="@+id/header_photo"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp" />
-
+-->
                 <ImageView
                     android:id="@+id/header_user_v"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_alignBottom="@id/header_photo"
                     android:layout_alignLeft="@id/header_photo"
                     android:layout_marginBottom="2dp"
-                    android:layout_marginLeft="35dp"
+                    android:layout_marginLeft="40dp"
                     android:src="@drawable/icon_user_v" />
 
                 <LinearLayout
                     android:gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="13dp"
                     android:layout_below="@id/header_photo"
                     android:id="@+id/setname"
                     android:orientation="horizontal"
@@ -77,7 +91,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="孙铭"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
                     <ImageView
@@ -100,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/setname"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="14dp"
                     android:text="|"
                     android:textColor="@color/white" />
 
@@ -117,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="2dp"
-                        android:text="13"
+
                         android:textColor="@color/white" />
 
                     <TextView
@@ -140,7 +153,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
-                        android:text="632"
+
                         android:textColor="@color/white" />
 
                     <TextView

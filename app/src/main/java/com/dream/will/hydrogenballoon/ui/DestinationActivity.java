@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,16 +27,21 @@ import com.dream.will.hydrogenballoon.apimanage.IDestinationApi;
 import com.dream.will.hydrogenballoon.apimanage.RetrofitManager;
 import com.dream.will.hydrogenballoon.bean.DbUserBean;
 import com.dream.will.hydrogenballoon.bean.Destinations;
+import com.dream.will.hydrogenballoon.bean.UrlString;
 import com.dream.will.hydrogenballoon.content.DestinationConstent;
 import com.dream.will.hydrogenballoon.content.IntentConstant;
 import com.dream.will.hydrogenballoon.customview.CollapseTextView;
 import com.dream.will.hydrogenballoon.customview.CollectionView;
 import com.dream.will.hydrogenballoon.customview.DestinationView;
 import com.dream.will.hydrogenballoon.customview.GoodsView;
+import com.dream.will.hydrogenballoon.customview.MyMapView;
+import com.dream.will.hydrogenballoon.customview.PlanView;
 import com.dream.will.hydrogenballoon.fragment.GonglvFragment;
 import com.dream.will.hydrogenballoon.inter.OnDestinationClickListener;
+import com.dream.will.hydrogenballoon.other.UtilString;
 import com.dream.will.hydrogenballoon.utils.DisplayUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -47,7 +54,7 @@ import retrofit2.Retrofit;
  * Created by Karlo on 2016/12/19.
  */
 
-public class DestinationActivity extends BaseActivity implements OnDestinationClickListener {
+public class DestinationActivity extends BaseActivity implements OnDestinationClickListener, MyMapView.OnMyMapClickListener {
     private Toolbar mToolbar;
     private AppBarLayout mDestinationContentAppbar;
     private TextView mDestinationConDestTitle;
@@ -55,7 +62,7 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
     private LinearLayout mDestinationConDest;
     private TextView mDestinationConPlanTitle;
     private TextView mDestinationConPlanSubTitle;
-    private ImageView mDestinationConPlanMap;
+    private MyMapView mDestinationConPlanMap;
     private LinearLayout mDestinationConPlan;
     private TextView mDestinationConCollectionTitle;
     private TextView mDestinationConCollectionSubTitle;
@@ -72,18 +79,22 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
     private DestinationView mDestinationConDestView;
     private CollapseTextView mDestinationConUseractivityDescri;
     private int main_id;
+    private PlanView mDestinationConPlanView;
+    private CoordinatorLayout mDestinationConCoordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_destination);
-        initData();
+        main_id = getIntent().getIntExtra(IntentConstant.INTNET_DESTINATION_KEY, 93);
         initViews();
+        initData();
         initEvents();
     }
 
     public void initViews() {
         Log.i("google.karlo", "initViews: ");
+        mDestinationConCoordinatorLayout = ((CoordinatorLayout) findViewById(R.id.destination_con_coordinatorLayout));
         mDestinationContentHeadview = (CollectionView) findViewById(R.id.destination_content_headview);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mDestinationContentAppbar = (AppBarLayout) findViewById(R.id.destination_content_appbar);
@@ -93,8 +104,9 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
         mDestinationConDest = (LinearLayout) findViewById(R.id.destination_con_dest);
         mDestinationConPlanTitle = (TextView) findViewById(R.id.destination_con_plan_title);
         mDestinationConPlanSubTitle = (TextView) findViewById(R.id.destination_con_plan_subTitle);
-        mDestinationConPlanMap = (ImageView) findViewById(R.id.destination_con_plan_map);
+        mDestinationConPlanMap = (MyMapView) findViewById(R.id.destination_con_plan_map);
         mDestinationConPlan = (LinearLayout) findViewById(R.id.destination_con_plan);
+        mDestinationConPlanView = ((PlanView) findViewById(R.id.destination_con_planView));
         mDestinationConCollectionTitle = (TextView) findViewById(R.id.destination_con_collection_title);
         mDestinationConCollectionSubTitle = (TextView) findViewById(R.id.destination_con_collection_subTitle);
         mDestinationConCollection = (LinearLayout) findViewById(R.id.destination_con_collection);
@@ -111,45 +123,56 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
     }
 
     public void initData() {
-        main_id = getIntent().getIntExtra(IntentConstant.INTNET_DESTINATION_KEY, 93);
         Retrofit retrofit = RetrofitManager.getInstance(ApiConstant.APPHOST_TYPE);
         IDestinationApi iDestinationApi = retrofit.create(IDestinationApi.class);
-        Call<String> call = iDestinationApi.requestDestionationById(main_id);
-        call.enqueue(new Callback<String>() {
+        Call<Destinations> call = iDestinationApi.requestDestionationById(main_id);
+
+        call.enqueue(new Callback<Destinations>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<Destinations> call, Response<Destinations> response) {
+                mDestinationProgressBar.setVisibility(View.GONE);
+                if (mDestinationErrorText.getVisibility() == View.VISIBLE) {
+                    mDestinationErrorText.setVisibility(View.GONE);
+                }
                 if (response.isSuccessful()) {
+                    mToolbar.setVisibility(View.VISIBLE);
+                    mDestinationConCoordinatorLayout.setVisibility(View.VISIBLE);
                     Log.i("google.karlo", "onResponse: " + response.body());
-                    Destinations destinations = Destinations.objectFromData(response.body());
+                    Destinations destinations = response.body();
                     Log.i("google.karlo", "onResponse: Destinations" + destinations.toString());
                     Destinations.DataBean data = destinations.getData();
-                    Destinations.DataBean.ParentDestinationBean parent_destination = data.getParent_destination();
+                    Destinations.DataBean.DestinationBean destination = data.getDestination();
                     List<Destinations.DataBean.GoodsBean> goods = data.getGoods();
-                    initHeadView(parent_destination);
+                    initHeadView(destination);
                     initGoods(goods);
                     initLayout(data.getSections());
                 } else {
                     Log.i("google.karlo", "onResponse: noSuccessful");
+                    mDestinationErrorText.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<Destinations> call, Throwable t) {
+                mDestinationProgressBar.setVisibility(View.GONE);
+                mDestinationErrorText.setVisibility(View.VISIBLE);
                 Log.i("google.karlo", "onFailure: " + t.getMessage());
             }
         });
     }
 
-    private void initHeadView(@NonNull Destinations.DataBean.ParentDestinationBean parent_destination) {
-        String name_en = parent_destination.getName_en();
-        String name = parent_destination.getName();
-        String photo_url = parent_destination.getPhoto_url();
-        //保存数据到数据库  并显示
-        long currentTime = System.currentTimeMillis();
-        GonglvFragment.wantToView.setText(new DbUserBean(MyApp.getInstance().USERNAME,name,main_id+"",currentTime+""));
+    private void initHeadView(@NonNull Destinations.DataBean.DestinationBean destination) {
+        String name_en = destination.getName_en();
+        String name = destination.getName();
+        String photo_url = destination.getPhoto_url();
+        /*这里存入数据库*/
+        long endTime = System.currentTimeMillis();
+        GonglvFragment.wantToView.setText(new DbUserBean(MyApp.getInstance().USERNAME,name,main_id+"",endTime+""));
         mToolbar.setTitle(name);
         mDestinationContentHeadview.setTv_title(name);
+        mDestinationContentHeadview.setTv_titleSize(28);
         mDestinationContentHeadview.setTv_subtitle(name_en);
+        mDestinationContentHeadview.setTv_subtitleSize(18);
         mDestinationContentHeadview.setImg(photo_url);
     }
 
@@ -172,7 +195,7 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
                 }
                 break;
                 case DestinationConstent.SECTIONS_PLAM: {
-
+                    initPlan(sectionsBean);
                 }
                 break;
                 case DestinationConstent.SECTIONS_USERACTIVITY: {
@@ -211,7 +234,8 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
         mDestinationConUseractivityUsername.setTag(user.getId());
         /*图片集*/
         List<Destinations.DataBean.SectionsBean.ModelsBean.ContentsBean> contents = modelsBean.getContents();
-        Glide.with(this).load(contents.get(0).getPhoto_url()).placeholder(R.color.picture_placeholder).into(mDestinationConUseractivityImg);
+        mDestinationConUseractivityImg.setTag(R.string.destination_user_photoSet, contents);
+        Glide.with(this).load(contents.get(0).getPhoto_url()).asBitmap().dontAnimate().placeholder(R.color.picture_placeholder).into(mDestinationConUseractivityImg);
     }
 
     private void initCollections(@NonNull Destinations.DataBean.SectionsBean sectionsBean) {
@@ -235,7 +259,24 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
         }
     }
 
+    private void initPlan(@NonNull Destinations.DataBean.SectionsBean sectionsBean) {
+        mDestinationConPlan.setVisibility(View.VISIBLE);
+        mDestinationConPlanTitle.setText(sectionsBean.getTitle());
+        mDestinationConPlanView.setListener(this);
+        mDestinationConPlanView.setData(sectionsBean.getModels());
+        mDestinationConPlanMap.setListener(this);
+    }
+
     public void initEvents() {
+
+        mDestinationErrorText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setVisibility(View.GONE);
+                mDestinationProgressBar.setVisibility(View.VISIBLE);
+                initData();
+            }
+        });
         mDestinationContentAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -260,7 +301,7 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
             }
         });
 
-        mDestinationConDestBtn.setOnClickListener(new View.OnClickListener() {
+        mDestinationConDestBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 /*跳转到当前目的地的概览与地图*/
@@ -268,7 +309,7 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
                 Toast.makeText(DestinationActivity.this, "概览与地图：" + id, Toast.LENGTH_SHORT).show();
             }
         });
-        mDestinationConUseractivityBtn.setOnClickListener(new View.OnClickListener() {
+        mDestinationConUseractivityBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 /*跳转到当前目的地的游记*/
@@ -277,12 +318,34 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
             }
         });
 
-        mDestinationConUseractivityUsername.setOnClickListener(new View.OnClickListener() {
+        mDestinationConUseractivityUsername.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int id = (int) v.getTag();
                 /*跳转到个人主页*/
                 Toast.makeText(DestinationActivity.this, "个人主页：" + id, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DestinationActivity.this, PersonalHomepage.class);
+                intent.putExtra(UtilString.USERID, String.valueOf(id));
+                startActivity(intent);
+            }
+        });
+        mDestinationConUseractivityImg.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*相关氢游记，图片集*/
+                Toast.makeText(DestinationActivity.this, "图片集", Toast.LENGTH_SHORT).show();
+                List<Destinations.DataBean.SectionsBean.ModelsBean.ContentsBean> contents = (List<Destinations.DataBean.SectionsBean.ModelsBean.ContentsBean>) v.getTag(R.string.destination_user_photoSet);
+                ArrayList<UrlString> url = new ArrayList<>();
+                for (Destinations.DataBean.SectionsBean.ModelsBean.ContentsBean bean : contents) {
+                    UrlString us = new UrlString();
+                    us.setUrl(bean.getPhoto_url());
+                    url.add(us);
+                }
+                Intent intent = new Intent(DestinationActivity.this, ShowPicActivity.class);
+                intent.putExtra(IntentConstant.KEY_SHOW_PIC_CURRENT, 1);
+                intent.putParcelableArrayListExtra(IntentConstant.KEY_SHOW_PIC_URL, url);
+                startActivity(intent);
+
             }
         });
     }
@@ -326,14 +389,23 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
             case DestinationConstent.SECTIONS_DESTINATION: {
               /*跳转到新的目的地页面*/
                 int id = (int) tag;
+//                String name = (String) view.getTag(R.string.destination_name);
                 Intent intent = new Intent(this, DestinationActivity.class);
-                intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY,id);
+                intent.putExtra(IntentConstant.INTNET_DESTINATION_KEY, id);
                 startActivity(intent);
-//                showAndsave(destinations.get(0).getUserName());
                 Toast.makeText(this, id + "新的目的地页面", Toast.LENGTH_SHORT).show();
             }
             break;
+            case DestinationConstent.SECTIONS_PLAM: {
+                mDestinationConPlanMap.setData((Destinations.DataBean.SectionsBean.ModelsBean) tag);
+            }
         }
+    }
+
+    @Override
+    public void OnMapClick(int planId) {
+        /*跳转到路线行程*/
+        Toast.makeText(this, "路线行程" + planId, Toast.LENGTH_SHORT).show();
     }
 
     //设置toolbar 导航栏 logo  侦听
@@ -344,6 +416,30 @@ public class DestinationActivity extends BaseActivity implements OnDestinationCl
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (null != mDestinationConPlanMap) {
+            mDestinationConPlanMap.onMapResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (null != mDestinationConPlanMap) {
+            mDestinationConPlanMap.onMapPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != mDestinationConPlanMap) {
+            mDestinationConPlanMap.onMapDestroy();
+        }
     }
 
 }
